@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Categories</title>
+    <title>Admins</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -16,37 +16,37 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="row content">
-            <div class="col-sm-12">
-                <h1>CATEGORIES</h1>
-                <a href="{{route('categories.create')}}" type="submit" class="btn btn-primary">Add New Category</a>
-                <hr>
-                @foreach($categories as $category)
-                <h2>{{$category->title}}</h2>
-                <h5>Articles of {{$category->title}}:</h5>
-                @foreach($category->articles as $article)
-                <p>- {{$article->title}}</p>
+<div class="container">
+    <div class="row content">
+        <div class="col-sm-12">
+            <h1>ADMINS</h1>
+            <a href="{{route('admins.create')}}" type="submit" class="btn btn-primary">Add New Admin</a>
+            <hr>
+            @foreach($admins as $admin)
+                <h3>{{$admin->name}}</h3>
+                <h5>Articles of {{$admin->name}}:</h5>
+                @foreach($admin->articles as $article)
+                    <p>- {{$article->title}}</p>
                 @endforeach
                 <div class="buttons">
                     <div class="col-sm-3">
-                        <a href="{{route('categories.edit', $category->id)}}" class="btn btn-primary">Edit Category</a>
+                        <a href="{{route('admins.edit', $admin->id)}}" class="btn btn-primary">Edit Admin</a>
                     </div>
-                    <form method="post" action="{{route('categories.destroy',$category->id)}}">
+                    <form method="post" action="{{route('admins.destroy',$admin->id)}}">
                         @method('DELETE')
                         @csrf
                         <div class="col-sm-3">
-                            <button type="submit" class="btn btn-danger">Delete Category</button>
+                            <button type="submit" class="btn btn-danger">Delete Admin</button>
                         </div>
                     </form>
                 </div>
                 <br>
                 <hr>
-                @endforeach
-                <br>
-            </div>
+            @endforeach
+            <br>
         </div>
     </div>
+</div>
 </body>
 
 </html>

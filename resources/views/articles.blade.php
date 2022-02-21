@@ -16,41 +16,44 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="row content">
-            <div class="col-sm-12">
-                <h1>ARTICLES</h1>
-                <a href="{{route('articles.create')}}" type="submit" class="btn btn-primary">Add New Article</a>
-                <hr>
-                @foreach($articles as $article)
-                <h2>{{$article->title}}</h2>
-                <h5><span>Sluck:</span> {{$article->sluck}}</h5>
-                <span>Category:</span>
-                @foreach($article->categories as $category)
-                <h5>- {{$category->title}}</h5>
-                @endforeach
-                <h5><span>Description: </span>{{$article->description}}</h5>
-                <!-- <h5><span>Status: </span> {{$article->status}}</h5> -->
+<div class="container">
+    <div class="row content">
+        <div class="col-sm-12">
+            <h1>ARTICLES</h1>
+            <a href="{{route('articles.create')}}" type="submit" class="btn btn-primary">Add New Article</a>
+            <hr>
+            @foreach($articles as $article)
+                <h3>{{$article->title}}</h3>
+{{--                <h5><span>Sluck:</span> {{$article->sluck}}</h5>--}}
+{{--                <span>Category:</span>--}}
+{{--                @foreach($article->categories as $category)--}}
+{{--                    <h5>- {{$category->title}}</h5>--}}
+{{--                @endforeach--}}
+{{--                <h5><span>Description: </span>{{$article->description}}</h5>--}}
+{{--                <h5><span>Status: </span> {{$article->status}}</h5>--}}
                 <br>
                 <div class="buttons">
+{{--                    <div class="col-sm-3">--}}
+{{--                        <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-primary">Edit Article</a>--}}
+{{--                    </div>--}}
                     <div class="col-sm-3">
-                        <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-primary">Edit Article</a>
+                        <a href="{{ route('articles.show', $article->id) }}" class="btn btn-success">Read More</a>
                     </div>
-                    <form method="post" action="{{route('articles.destroy',$article->id)}}">
-                        @method('DELETE')
-                        @csrf
-                        <div class="col-sm-3">
-                            <button type="submit" class="btn btn-danger">Delete Article</button>
-                        </div>
-                    </form>
-
+{{--                    <form method="post" action="{{route('articles.destroy',$article->id)}}">--}}
+{{--                        @method('DELETE')--}}
+{{--                        @csrf--}}
+{{--                        <div class="col-sm-3">--}}
+{{--                            <button type="submit" class="btn btn-danger">Delete Article</button>--}}
+{{--                        </div>--}}
+{{--                    </form>--}}
                 </div>
                 <br>
                 <hr>
-                @endforeach
-                <br>
-            </div>
+            @endforeach
+            <br>
         </div>
+    </div>
+</div>
 </body>
 
 </html>

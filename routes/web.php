@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AdminController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
@@ -25,5 +26,8 @@ Route::resource('/articles', ArticleController::class)->names('articles');
 
 //Category
 Route::resource('/categories', CategoryController::class)->names('categories');
+
+//Admin
+Route::resource('/admins', AdminController::class)->names('admins');
 
 

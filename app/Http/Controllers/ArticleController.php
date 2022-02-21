@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreArticleRequest;
+use App\Models\Admin;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -17,7 +19,7 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::all();
-        return view('articles')->with('articles', $articles);
+        return view('articles', compact('articles'));
     }
 
     /**
@@ -28,19 +30,19 @@ class ArticleController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('add-article', compact('categories'));
+        $admins = Admin::all();
+        return view('add-article', compact('categories', 'admins'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreArticleRequest $request, Article $article)
     {
-        $input = $request->all();
-        $article = Article::create($input);
+        $this->syncRequest($request, $article);
         $article->categories()->attach($request->input('categories'));
         return redirect()->route('articles.index');
     }
@@ -48,50 +50,46 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Article  $article
+     * @param \App\Models\Article $article
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        // 
+        $article = Article::find($id);
+        return view('detail-article', compact('article'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Article  $article
+     * @param \App\Models\Article $article
      * @return \Illuminate\Http\Response
      */
     public function edit(Article $article)
     {
         $categories = Category::all();
-        return view('edit-article', compact('categories'))->with('article', $article);
+        $admins = Admin::all();
+        return view('edit-article', compact('categories', 'article', 'admins'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Article  $article
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Article $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(StoreAdminRequest $request, Article $article)
     {
-        $categories = Category::get();
-        $article->update([
-            'title' => $request->title,
-            'sluck' => $request->sluck,
-            'description' => $request->description,
-            'categories' => $article->categories()->sync($request->input('categories')),
-            'status' => $request->status
-        ]);
-        return view('edit-article', compact('categories'))->with('article', $article);
+        $this->syncRequest($request, $article);
+        $article->categories()->sync($request->input('categories'));
+        return redirect()->route('articles.show', $article->id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Article  $article
+     * @param \App\Models\Article $article
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -101,4 +99,15 @@ class ArticleController extends Controller
         $article->delete();
         return redirect()->route('articles.index');
     }
+
+    public function syncRequest($request, Article $article)
+    {
+        $article->title = $request->input('title');
+        $article->sluck = $request->input('sluck');
+        $article->description = $request->input('description');
+        $article->status = $request->input('status');
+        $article->admin_id = $request->input('admin_id');
+        $article->save();
+    }
+
 }

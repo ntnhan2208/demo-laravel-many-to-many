@@ -14,45 +14,62 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="row content">
-            <div class="col-sm-12">
-                <h1>EDIT</h1>
-                <form action="{{route('articles.update',$article)}}" method="post">
-                    @method('PUT')
-                    @csrf
-                    <div class="form-group">
-                        <label>Title</label>
-                        <input name="title" type="text" class="form-control" value="{{$article->title}}">
-                    </div>
-                    <div class="form-group">
-                        <label>Sluck</label>
-                        <input name="sluck" type="text" class="form-control" value="{{$article->sluck}}">
-                    </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <input name="description" type="text" class="form-control" value="{{$article->description}}">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Categories</label>
-                        <div class="categories">
-                            @foreach ($categories as $category)
-                            <input name="categories[]" class="form-check-input" type="checkbox" value="{{ $category->id }}" @if($article->categories->contains($category->id))) checked @endif >
+<div class="container">
+    <div class="row content">
+        <div class="col-sm-12">
+            <h1>EDIT</h1>
+            <form action="{{route('articles.update',$article)}}" method="post">
+                @method('PUT')
+                @csrf
+                <div class="form-group">
+                    <label>Title</label>
+                    <input name="title" type="text" class="form-control" value="{{$article->title}}">
+                    @error('title')
+                    <div class="alert alert-danger">{{$message}}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label>Sluck</label>
+                    <input name="sluck" type="text" class="form-control" value="{{$article->sluck}}">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input name="description" type="text" class="form-control" value="{{$article->description}}">
+                    @error('description')
+                    <div class="alert alert-danger">{{$message}}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label>Categories</label>
+                    <div class="categories">
+                        @foreach ($categories as $category)
+                            <input name="categories[]" class="form-check-input" type="checkbox"
+                                   value="{{ $category->id }}" @if($article->categories->contains($category->id)))
+                                   checked @endif >
                             <label>{{$category->title}}</label>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Admin: </label><span> {{$article->admin['name']}}</span>
+                    <div class="admins">
+                        <select class="form-control" name="admin_id" id="admins">
+                            @foreach($admins as $admin)
+                                <option value="{{$admin->id}}">{{$admin->name}}</option>
                             @endforeach
-                        </div>
+                        </select>
                     </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <input name="status" type="text" class="form-control" value="{{$article->status}}">
-                        <small id="statusHelp" class="form-text text-muted">1=Active - 0=Unactive</small>
-                    </div>
-                    <br>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <input name="status" type="text" class="form-control" value="{{$article->status}}">
+                    <small id="statusHelp" class="form-text text-muted">1=Active - 0=Unactive</small>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
+    </div>
+</div>
 </body>
-
 </html>

@@ -19,6 +19,8 @@ class CreateArticlesTable extends Migration
             $table->string('sluck');
             $table->string('description');
             $table->boolean('status')->default(true);
+            $table->integer('admin_id')->unsigned()->nullable();
+            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
             $table->timestamps();
         });
     }
