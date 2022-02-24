@@ -28,12 +28,21 @@
                     <div class="alert alert-danger">{{$message}}</div>
                     @enderror
                 </div>
-                <div>
+                <div class="form-group">
                     <label>Email:</label>
                     <input name="email" type="text" class="form-control" value="{{$admin->email}}" readonly>
                     @error('email')
                     <div class="alert alert-danger">{{$message}}</div>
                     @enderror
+                </div>
+                <div class="form-group">
+                    <label>Status:</label>
+                    <div class="radio">
+                        <label><input type="radio" name="optradio" value="1" @if($admin->active==1) checked @endif>Active</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" name="optradio" value="0" @if($admin->active==0) checked @endif>Unactive</label>
+                    </div>
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary">Submit</button>

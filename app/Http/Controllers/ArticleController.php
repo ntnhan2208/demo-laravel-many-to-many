@@ -79,7 +79,7 @@ class ArticleController extends Controller
      * @param \App\Models\Article $article
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreAdminRequest $request, Article $article)
+    public function update(StoreArticleRequest $request, Article $article)
     {
         $this->syncRequest($request, $article);
         $article->categories()->sync($request->input('categories'));

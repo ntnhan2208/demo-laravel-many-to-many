@@ -102,6 +102,7 @@ class AdminController extends Controller
         $admin->name = $request->input('name');
         $admin->email = $request->input('email');
         $admin->password = $request->input('password');
+        $admin->active = $request->input('optradio');
         $admin->save();
     }
 }

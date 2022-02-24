@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Edit Article</title>
+    <title>Add Article</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -44,6 +44,15 @@
                     @error('password')
                     <div class="alert alert-danger">{{$message}}</div>
                     @enderror
+                </div>
+                <div class="form-group">
+                    <label>Status:</label>
+                    <div class="radio">
+                        <label><input type="radio" name="optradio" value="1" checked>Active</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" name="optradio" value="0">Unactive</label>
+                    </div>
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary">Submit</button>
